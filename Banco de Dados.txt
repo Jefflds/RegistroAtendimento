@@ -1,0 +1,73 @@
+-- Crie o banco de dados
+CREATE DATABASE RegistroDeAtendimentos;
+
+-- Use o banco de dados
+USE RegistroDeAtendimentos;
+
+-- Tabela para armazenar informações sobre a Categoria do Atendimento
+CREATE TABLE CategoriaAtendimento (
+    IDCategoria INT AUTO_INCREMENT PRIMARY KEY,
+    NomeCategoria VARCHAR(255) NOT NULL
+);
+
+-- Insira as categorias de atendimentos
+INSERT INTO CategoriaAtendimento (NomeCategoria)
+VALUES
+    ('Techsapp'),
+    ('Lifix'),
+    ('Governança'),
+    ('Kuiper'),
+    ('A7'),
+    ('SevenShop'),
+    ('Comercial'),
+    ('Financeiro');
+
+-- Tabela para armazenar informações sobre a Pessoa que Atendeu
+CREATE TABLE PessoaAtendeu (
+    IDPessoa INT AUTO_INCREMENT PRIMARY KEY,
+    NomePessoa VARCHAR(255) NOT NULL
+);
+
+-- Tabela para armazenar informações sobre a Loja
+CREATE TABLE Loja (
+    IDLoja INT AUTO_INCREMENT PRIMARY KEY,
+    NomeLoja VARCHAR(255) NOT NULL
+);
+
+-- Tabela para armazenar informações sobre o Cliente
+CREATE TABLE Cliente (
+    IDCliente INT AUTO_INCREMENT PRIMARY KEY,
+    NomeCliente VARCHAR(255) NOT NULL,
+    IDLoja INT,
+    FOREIGN KEY (IDLoja) REFERENCES Loja(IDLoja)
+);
+
+-- Tabela para armazenar informações sobre o Telefone
+CREATE TABLE Telefone (
+    IDTelefone INT AUTO_INCREMENT PRIMARY KEY,
+    NumeroTelefone VARCHAR(20) NOT NULL,
+    IDLoja INT,
+    FOREIGN KEY (IDLoja) REFERENCES Loja(IDLoja)
+);
+
+-- Tabela para armazenar informações sobre o Anydesk
+CREATE TABLE Anydesk (
+    IDAnydesk INT AUTO_INCREMENT PRIMARY KEY,
+    NumeroAnydesk VARCHAR(20) NOT NULL,
+    IDLoja INT,
+    FOREIGN KEY (IDLoja) REFERENCES Loja(IDLoja)
+);
+
+-- Tabela para armazenar informações sobre o Atendimento
+CREATE TABLE Atendimento (
+    IDAtendimento INT AUTO_INCREMENT PRIMARY KEY,
+    Descricao TEXT,
+    IDCategoria INT,
+    IDLoja INT,
+    IDCliente INT,
+    IDPessoaAtendeu INT,
+    FOREIGN KEY (IDCategoria) REFERENCES CategoriaAtendimento(IDCategoria),
+    FOREIGN KEY (IDLoja) REFERENCES Loja(IDLoja),
+    FOREIGN KEY (IDCliente) REFERENCES Cliente(IDCliente),
+    FOREIGN KEY (IDPessoaAtendeu) REFERENCES PessoaAtendeu(IDPessoa)
+);
